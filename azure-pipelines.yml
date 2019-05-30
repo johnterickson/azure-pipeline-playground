@@ -91,22 +91,28 @@ stages:
 
         windows-baseline:  
           VM_IMAGE: vs2017-win2016
+          YARN_CACHE_FOLDER_BASH: /d/a/1/yarn-cache
         windows-cache:  
           VM_IMAGE: vs2017-win2016
+          YARN_CACHE_FOLDER_BASH: /d/a/1/yarn-cache
           RESTORE_CACHE: 1
         windows-node_modules:  
           VM_IMAGE: vs2017-win2016
+          YARN_CACHE_FOLDER_BASH: /d/a/1/yarn-cache
           RESTORE_NODE_MODULES: 1
           SKIP_YARN: 1
         windows-cache-node_modules:  
           VM_IMAGE: vs2017-win2016
+          YARN_CACHE_FOLDER_BASH: /d/a/1/yarn-cache
           RESTORE_CACHE: 1
           RESTORE_NODE_MODULES: 1
         windows-cachetar:  
           VM_IMAGE: vs2017-win2016
+          YARN_CACHE_FOLDER_BASH: /d/a/1/yarn-cache
           RESTORE_CACHE_TAR: 1
         windows-node_modulestar:
           VM_IMAGE: vs2017-win2016
+          YARN_CACHE_FOLDER_BASH: /d/a/1/yarn-cache
           RESTORE_NODE_MODULES_TAR: 1
           SKIP_YARN: 1
         # macOS:
@@ -115,6 +121,7 @@ stages:
       vmImage: $(VM_IMAGE)
     variables:  
       YARN_CACHE_FOLDER: $(Pipeline.Workspace)/yarn-cache
+      YARN_CACHE_FOLDER_BASH: $(Pipeline.Workspace)/yarn-cache
       NODE_MODULES_FOLDER: $(System.DefaultWorkingDirectory)/node_modules
       RESTORE_CACHE: 0
       RESTORE_CACHE_TAR: 0
@@ -128,7 +135,7 @@ stages:
       displayName: 'Install Node 10.x'
     - bash: yarn config set registry https://registry.npmjs.org/ --global
 
-    - bash: ls -l $(YARN_CACHE_FOLDER) || echo $(YARN_CACHE_FOLDER) not found
+    - bash: ls -l $(YARN_CACHE_FOLDER_BASH) || echo $(YARN_CACHE_FOLDER_BASH) not found
       displayName: display cache folder
 
     - powershell: curl http://download.microsoft.com/download/0/1/C/01CC78AA-B53B-4884-B7EA-74F2878AA79F/adk/adksetup.exe -o adksetup.exe
@@ -177,7 +184,7 @@ stages:
         tar -xf node_modules.tar
       condition: and(succeeded(), eq(variables['RESTORE_NODE_MODULES_TAR'], '1'))
 
-    - bash: ls -l $(YARN_CACHE_FOLDER) || echo $(YARN_CACHE_FOLDER) not found
+    - bash: ls -l $(YARN_CACHE_FOLDER_BASH) || echo $(YARN_CACHE_FOLDER_BASH) not found
       displayName: display cache folder
 
     - bash: yarn cache list | wc -l
@@ -187,7 +194,7 @@ stages:
       condition: and(succeeded(), ne(variables['SKIP_YARN'], '1'))
     - bash: yarn cache list | wc -l
       displayName: Show count of packages in yarn cache
-    - bash: ls -l $(YARN_CACHE_FOLDER) || echo $(YARN_CACHE_FOLDER) not found
+    - bash: ls -l $(YARN_CACHE_FOLDER_BASH) || echo $(YARN_CACHE_FOLDER_BASH) not found
       displayName: display cache folder
     - script: |
         mkdir trace
