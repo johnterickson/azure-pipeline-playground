@@ -91,27 +91,33 @@ stages:
 
         windows-baseline:  
           VM_IMAGE: vs2017-win2016
+          YARN_CACHE_FOLDER: $(Pipeline.Workspace)\yarn-cache
           YARN_CACHE_FOLDER_BASH: /d/a/1/yarn-cache
         windows-cache:  
           VM_IMAGE: vs2017-win2016
+          YARN_CACHE_FOLDER: $(Pipeline.Workspace)\yarn-cache
           YARN_CACHE_FOLDER_BASH: /d/a/1/yarn-cache
           RESTORE_CACHE: 1
         windows-node_modules:  
           VM_IMAGE: vs2017-win2016
+          YARN_CACHE_FOLDER: $(Pipeline.Workspace)\yarn-cache
           YARN_CACHE_FOLDER_BASH: /d/a/1/yarn-cache
           RESTORE_NODE_MODULES: 1
           SKIP_YARN: 1
         windows-cache-node_modules:  
           VM_IMAGE: vs2017-win2016
+          YARN_CACHE_FOLDER: $(Pipeline.Workspace)\yarn-cache
           YARN_CACHE_FOLDER_BASH: /d/a/1/yarn-cache
           RESTORE_CACHE: 1
           RESTORE_NODE_MODULES: 1
         windows-cachetar:  
           VM_IMAGE: vs2017-win2016
+          YARN_CACHE_FOLDER: $(Pipeline.Workspace)\yarn-cache
           YARN_CACHE_FOLDER_BASH: /d/a/1/yarn-cache
           RESTORE_CACHE_TAR: 1
         windows-node_modulestar:
           VM_IMAGE: vs2017-win2016
+          YARN_CACHE_FOLDER: $(Pipeline.Workspace)\yarn-cache
           YARN_CACHE_FOLDER_BASH: /d/a/1/yarn-cache
           RESTORE_NODE_MODULES_TAR: 1
           SKIP_YARN: 1
